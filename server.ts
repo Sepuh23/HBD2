@@ -12,6 +12,12 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+// Optimization: Add request logging to monitor traffic
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 const DB_FILE = path.join(process.cwd(), "db.json");
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 
