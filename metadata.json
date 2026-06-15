@@ -1,0 +1,6 @@
+{
+  "name": "Ivory Cream Birthday Gift",
+  "description": "An elegant, interactive romantic birthday gift experience designed with a luxurious Editorial Aesthetic, soft ivory vanilla tones, champagne accents, and classic typography.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

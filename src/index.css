@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Pinyon+Script&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-cursive: "Pinyon Script", cursive;
+  
+  --color-ivory-600: #E4D5B9;
+  --color-ivory-300: #FAF6EE;
+  --color-cream-bg: #FAF6EE;
+  --color-cream-card: #F3ECE0;
+  --color-cream-border: #E4DABD;
+  --color-chocolate: #3E2B1A;
+  --color-champagne: #C0982E;
+  --color-terracotta: #C27461;
+  --color-rose-accent: #E8AA9C;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) scale(var(--scale, 1));
+  }
+  50% {
+    transform: translateY(-10px) scale(var(--scale, 1));
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+  will-change: transform;
+}
+
+/* Hide scrollbars elegantly for compact scrolling containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
