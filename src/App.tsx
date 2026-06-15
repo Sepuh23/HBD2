@@ -829,7 +829,7 @@ export default function App() {
                       <div className="space-y-1">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-chocolate/60 block">Atau Tempel URL Gambar Web</label>
                         <input 
-                          type="url" 
+                          type="text" 
                           value={newPhotoUrl} 
                           onChange={(e) => {
                             setNewPhotoUrl(e.target.value);
