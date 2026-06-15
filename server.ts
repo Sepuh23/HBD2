@@ -19,11 +19,14 @@ app.use((req, res, next) => {
 });
 
 const DB_FILE = path.join(process.cwd(), "db.json");
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
+const UPLOAD_DIR = path.join(process.cwd(), "uploads");
 
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
+
+// Serve uploaded files statically at /uploads URL path
+app.use("/uploads", express.static(UPLOAD_DIR));
 
 if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, JSON.stringify({}));
@@ -79,8 +82,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     res.status(400).json({ error: "No file uploaded" });
     return;
   }
-  // Remove public prefix to get the web path
-  const filePath = req.file.path.replace(path.join(process.cwd(), "public"), "").replace(/\\/g, "/");
+  // Return the web path to the newly uploaded file
+  const filePath = "/uploads/" + req.file.filename;
   res.json({ url: filePath });
 });
 

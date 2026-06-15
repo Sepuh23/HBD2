@@ -138,32 +138,45 @@ export default function App() {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  // Fetch initial data from server
+  // Fetch initial data from server and sync periodically
   useEffect(() => {
-    fetch("/api/data")
-      .then(r => r.json())
-      .then(data => {
-        if (data.coverTitle) setCoverTitle(data.coverTitle);
-        if (data.coverGreeting) setCoverGreeting(data.coverGreeting);
-        if (data.coverSub) setCoverSub(data.coverSub);
-        if (data.coverSecretTag) setCoverSecretTag(data.coverSecretTag);
-        
-        if (data.letterTitle) setLetterTitle(data.letterTitle);
-        if (data.letterGreeting) setLetterGreeting(data.letterGreeting);
-        if (data.letterParagraphs) setLetterParagraphs(data.letterParagraphs);
-        if (data.letterSignature) setLetterSignature(data.letterSignature);
-        
-        if (data.musicTitle) setMusicTitle(data.musicTitle);
-        if (data.musicArtist) setMusicArtist(data.musicArtist);
-        if (data.musicMelody) setMusicMelody(data.musicMelody);
-        if (data.customAudioUrl) setCustomAudioUrl(data.customAudioUrl);
-        
-        if (data.galleryPhotos) setGalleryPhotos(data.galleryPhotos);
-        if (data.whisperCards) setWhisperCards(data.whisperCards);
-      })
-      .catch(e => console.warn("Could not load server data:", e))
-      .finally(() => setIsDataLoaded(true));
-  }, []);
+    const loadData = () => {
+      fetch("/api/data")
+        .then(r => r.json())
+        .then(data => {
+          if (data.coverTitle) setCoverTitle(data.coverTitle);
+          if (data.coverGreeting) setCoverGreeting(data.coverGreeting);
+          if (data.coverSub) setCoverSub(data.coverSub);
+          if (data.coverSecretTag) setCoverSecretTag(data.coverSecretTag);
+          
+          if (data.letterTitle) setLetterTitle(data.letterTitle);
+          if (data.letterGreeting) setLetterGreeting(data.letterGreeting);
+          if (data.letterParagraphs) setLetterParagraphs(data.letterParagraphs);
+          if (data.letterSignature) setLetterSignature(data.letterSignature);
+          
+          if (data.musicTitle) setMusicTitle(data.musicTitle);
+          if (data.musicArtist) setMusicArtist(data.musicArtist);
+          if (data.musicMelody) setMusicMelody(data.musicMelody);
+          if (data.customAudioUrl) setCustomAudioUrl(data.customAudioUrl);
+          
+          if (data.galleryPhotos) setGalleryPhotos(data.galleryPhotos);
+          if (data.whisperCards) setWhisperCards(data.whisperCards);
+        })
+        .catch(e => console.warn("Could not load server data:", e))
+        .finally(() => setIsDataLoaded(true));
+    };
+
+    loadData(); // Load initially
+    
+    // Sinkronisasi otomatis dari server ke Perangkat 2 (Viewers) setiap 5 detik
+    const interval = setInterval(() => {
+      if (!isAdminMode) {
+        loadData();
+      }
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [isAdminMode]);
 
   // Save changes to backend automatically when variables update
   useEffect(() => {
